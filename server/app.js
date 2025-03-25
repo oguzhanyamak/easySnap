@@ -7,13 +7,15 @@ require('dotenv').config();
 const resolvers = require('./graphql/resolvers/index');
 
 const User = require('./models/user');
+const Snap = require('./models/snap');
 
 async function startServer() {
     const server = new ApolloServer({
         typeDefs: importSchema('./graphql/schema.graphql'),
         resolvers,
         context:{
-            User
+            User,
+            Snap
         }
     });
 
