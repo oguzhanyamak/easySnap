@@ -1,7 +1,9 @@
 const express = require('express');
-const {ApolloServer} = require('apollo-server-express');
-const {importSchema} = require('graphql-import');
+const { ApolloServer } = require('apollo-server-express');
+const { importSchema } = require('graphql-import');
+const mongoose = require('mongoose');
 
+require('dotenv').config();
 const resolvers = require('./graphql/resolvers/index');
 
 async function startServer() {
@@ -12,10 +14,11 @@ async function startServer() {
 
     await server.start();
 
+    mongoose.connect(process.env.MONGO_DB_CONN, { dbName: process.env.MONGO_DB_NAME }).then(() => console.log('Connected to MongoDB')).catch((err) => console.log(err));
     const app = express();
-    server.applyMiddleware({app});
+    server.applyMiddleware({ app });
 
-    app.listen({port:4000}, () => {
+    app.listen({ port: 4000 }, () => {
         console.log('Server Ready at 4000 Port')
     });
 }
