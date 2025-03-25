@@ -1,0 +1,33 @@
+type Query{
+    """
+    query{
+        user(id:"67e2c090b7bcdd5a47bab2f4"){
+            username
+        }
+    }
+    """
+    user(id:ID!):User!
+    users:[User!]!
+}
+
+type User{
+    username:String!,
+    createdAt:String!
+}
+
+type Mutation{
+    """
+    mutation {
+        createUser(data: { username: "test", password: "1234" }) {
+            username
+        }
+    }
+    """
+    createUser(data:CreateUserInput!):User
+}
+
+
+input CreateUserInput{
+    username:String!
+    password:String!
+}

@@ -6,10 +6,15 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const resolvers = require('./graphql/resolvers/index');
 
+const User = require('./models/user');
+
 async function startServer() {
     const server = new ApolloServer({
-        typeDefs: importSchema('./graphql/types/schema.graphql'),
-        resolvers
+        typeDefs: importSchema('./graphql/schema.graphql'),
+        resolvers,
+        context:{
+            User
+        }
     });
 
     await server.start();
