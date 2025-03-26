@@ -8,7 +8,7 @@ module.exports = {
             throw new Error('User already exists');
         }
         const newUser = await new User({username,password}).save();
-        return {token:token.generateToken(newUser,'1h')};
+        return {token:token.generateToken(newUser.Id,'1h')};
     },
     signIn: async (parent,{data:{username,password}},{User}) => {
         const user = await User.findOne({username:username});
@@ -19,7 +19,7 @@ module.exports = {
         if(!isMatch){
             throw new Error('Invalid password');
         }
-        return {token:token.generateToken(user,'1h')};
+        return {token:token.generateToken(user.Id,'1h')};
 
     }
 }
